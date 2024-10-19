@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CallMe - Service online caller</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+<div id="auth-container">
+    <!-- Форма регистрации -->
+    <div id="registration-form">
+        <h2>Регистрация</h2>
+        <form id="register">
+            <input type="text" id="name" placeholder="Ваше имя" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="text" id="nickname" placeholder="Nickname" required>
+            <input type="password" id="password" placeholder="Пароль" required>
+            <input type="password" id="confirm-password" placeholder="Повтор пароля" required>
+            <button type="submit">Регистрация</button>
+        </form>
+        <p class="switch-auth">Уже есть аккаунт? <a id="show-login" href="#">Войти</a></p>
+    </div>
+
+    <!-- Форма авторизации -->
+    <div id="login-form" style="display:none;">
+        <h2>Авторизация</h2>
+        <form id="login">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Пароль" required>
+            <button type="submit">Login</button>
+        </form>
+        <p class="switch-auth">Нет аккаунта? <a id="show-register" href="#">Регистрация</a></p>
+    </div>
+</div>
+
+<div id="room-entry" style="display:none;">
+    <h2>Войти в комнату</h2>
+    <input type="text" id="room-id" placeholder="Room ID">
+    <button id="enter-room-button">Войти</button>
+    <div id="user-info"></div>
+</div>
+
+<!-- Подключение JS-файла -->
+<script src="/scripts/auth.js"></script>
+</body>
+</html>
