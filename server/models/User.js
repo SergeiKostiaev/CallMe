@@ -2,11 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/db');
 
-class User extends Model {
-    async matchPassword(password) {
-        return await bcrypt.compare(password, this.password);
-    }
-}
+class User extends Model {}
 
 User.init({
     name: {
@@ -16,7 +12,7 @@ User.init({
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: true,  // Уникальность email
     },
     nickname: {
         type: DataTypes.STRING,
@@ -25,15 +21,10 @@ User.init({
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-    }
+    },
 }, {
     sequelize,
     modelName: 'User',
-});
-
-// Hash password before saving the user
-User.beforeCreate(async (user) => {
-    user.password = await bcrypt.hash(user.password, 10);
 });
 
 module.exports = User;
