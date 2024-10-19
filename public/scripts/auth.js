@@ -11,7 +11,7 @@ registrationForm.addEventListener('submit', async (e) => {
     const confirmPassword = document.getElementById('confirm-password').value;
 
     try {
-        const response = await fetch('/api/register', { // Убедитесь, что путь к API правильный
+        const response = await fetch('/register', { // Убедитесь, что путь к API правильный
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Устанавливаем заголовок
@@ -45,7 +45,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById('login-password').value;
 
     try {
-        const response = await fetch('/api/login', { // Убедитесь, что путь к API правильный
+        const response = await fetch('/login', { // Убедитесь, что путь к API правильный
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Устанавливаем заголовок
