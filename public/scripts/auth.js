@@ -1,26 +1,8 @@
-// Получаем элементы формы и ссылки для переключения
-const registrationContainer = document.getElementById('registration-form');
-const loginContainer = document.getElementById('login-form');
-const showLoginLink = document.getElementById('show-login');
-const showRegisterLink = document.getElementById('show-register');
+const registrationForm = document.getElementById('register');
+const loginForm = document.getElementById('login');
 
-// Добавляем обработчик клика на ссылку для показа формы авторизации
-showLoginLink.addEventListener('click', function (e) {
-    e.preventDefault();  // предотвращаем переход по ссылке
-    registrationContainer.style.display = 'none';  // скрываем форму регистрации
-    loginContainer.style.display = 'block';  // показываем форму авторизации
-});
-
-// Добавляем обработчик клика на ссылку для показа формы регистрации
-showRegisterLink.addEventListener('click', function (e) {
-    e.preventDefault();  // предотвращаем переход по ссылке
-    loginContainer.style.display = 'none';  // скрываем форму авторизации
-    registrationContainer.style.display = 'block';  // показываем форму регистрации
-});
-
-// Обработка отправки формы регистрации
-document.getElementById('register').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Предотвращаем перезагрузку страницы
+registrationForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Предотвращаем перезагрузку страницы
 
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
@@ -28,73 +10,61 @@ document.getElementById('register').addEventListener('submit', async (event) => 
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
 
-    if (password !== confirmPassword) {
-        alert('Пароли не совпадают!');
-        return;
-    }
-
-    // Отправляем данные на сервер
     try {
-        const response = await fetch('/api/register', {
+        const response = await fetch('/api/register', { // Убедитесь, что путь к API правильный
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json', // Устанавливаем заголовок
             },
             body: JSON.stringify({
                 name,
                 email,
                 nickname,
                 password,
-                confirmPassword
-            })
+                confirmPassword,
+            }),
         });
 
-        const data = await response.json();
-        if (response.ok) {
-            alert('Регистрация прошла успешно!');
-            // Здесь можно добавить перенаправление или другую логику
-            // Например, можно сразу авторизовать пользователя
-            // window.location.href = '/path/to/some/page';
-        } else {
-            alert(data.message); // Показываем сообщение об ошибке
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Ошибка при регистрации');
         }
+
+        const data = await response.json();
+        console.log('Registration successful', data);
+        // Здесь можно выполнить дополнительные действия, например, перейти на другую страницу
     } catch (error) {
-        console.error('Ошибка при регистрации:', error);
-        alert('Ошибка при регистрации. Попробуйте еще раз.');
+        console.error('Ошибка при регистрации:', error.message);
     }
 });
 
-// Обработка отправки формы авторизации
-document.getElementById('login').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Предотвращаем перезагрузку страницы
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Предотвращаем перезагрузку страницы
 
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    // Отправляем данные на сервер
     try {
-        const response = await fetch('/api/login', {
+        const response = await fetch('/api/login', { // Убедитесь, что путь к API правильный
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json', // Устанавливаем заголовок
             },
             body: JSON.stringify({
                 email,
-                password
-            })
+                password,
+            }),
         });
 
-        const data = await response.json();
-        if (response.ok) {
-            alert('Авторизация прошла успешно!');
-            // Здесь можно добавить перенаправление или другую логику
-            // Например, можно перенаправить на страницу комнаты
-            // window.location.href = '/path/to/room';
-        } else {
-            alert(data.message); // Показываем сообщение об ошибке
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Ошибка при входе');
         }
+
+        const data = await response.json();
+        console.log('Login successful', data);
+        // Здесь можно выполнить дополнительные действия, например, перейти на другую страницу
     } catch (error) {
-        console.error('Ошибка при авторизации:', error);
-        alert('Ошибка при авторизации. Попробуйте еще раз.');
+        console.error('Ошибка при входе:', error.message);
     }
 });

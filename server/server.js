@@ -13,6 +13,8 @@ const peerServer = ExpressPeerServer(server, {
     debug: true,
 });
 
+app.use('/api', require('./routes/auth'));
+
 // Подключение PeerJS к вашему серверу
 app.use('/peerjs', peerServer);
 
